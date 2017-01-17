@@ -1,7 +1,9 @@
 
-// 20150521 am 11:18 
+/* 20150521 am 11:18
+   2017.01.17 am 09:49 , modify 
+*/
 
-class particletest
+class Particle
 {
   /*
   I named class name to same name with tab name . 
@@ -14,23 +16,25 @@ class particletest
   PVector acceleration;
   float lifespan;
   
-  particletest(PVector l)
+  Particle( PVector loc )
   {
-    location = l.get();
+    location = loc.get();
     velocity = new PVector(0 , 0);
     acceleration = new PVector(0 , 0);
     lifespan = 255.0; 
   }
     
-  void run(PVector force)
+  void run( PVector force )
   {
-    update(force);
+    applyForce( force ) ;
+    update();
+    checkEdge() ;
     display();
   }
   
-  void applyforce(PVector force)
+  void applyForce( PVector force )
   {
-    acceleration.add(force);
+    acceleration.add( force );
   }
   
   
@@ -46,15 +50,25 @@ class particletest
     }
   }
   
-  void update(PVector force)
+  void update()
   {
-    applyforce(force);
     velocity.add(acceleration);
     location.add(velocity);
+
     acceleration.mult(0);
+
     lifespan -= 2.0;
   }
   
+  void checkEdge() {
+    if( location.x <= 0 || location.x >= width ) {
+      velocity.x = (-1) * velocity.x ;
+    }
+    if( location.y <= 0 || location.y >= height ) {
+      velocity.y = (-1) * velocity.y ;
+    }
+  }
+   
   void display()
   {
     stroke(0 , lifespan);
