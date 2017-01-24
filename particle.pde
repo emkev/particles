@@ -1,6 +1,7 @@
 
 /* 20150521 am 11:18
-   2017.01.17 am 09:49 , modify 
+   2017.01.17 am 09:49 , modify
+   2017.01.24 pm 12:25 , modify
 */
 
 class Particle
@@ -16,9 +17,9 @@ class Particle
   PVector acceleration;
   float lifespan;
   
-  Particle( PVector loc )
+  Particle( float lx , float ly )
   {
-    location = loc.get();
+    location = new PVector( lx , ly ) ;
     velocity = new PVector(0 , 0);
     acceleration = new PVector(0 , 0);
     lifespan = 255.0; 
@@ -38,7 +39,7 @@ class Particle
   }
   
   
-  boolean isdead()
+  boolean isDead()
   {
     if(lifespan <= 0.0)
     {
