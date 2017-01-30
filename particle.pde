@@ -2,6 +2,7 @@
 /* 20150521 am 11:18
    2017.01.17 am 09:49 , modify
    2017.01.24 pm 12:25 , modify
+   2017.01.26 pm 19:42 , add mass
 */
 
 class Particle
@@ -16,37 +17,38 @@ class Particle
   PVector velocity;
   PVector acceleration;
   float lifespan;
+  float mass ;
   
   Particle( float lx , float ly )
   {
     location = new PVector( lx , ly ) ;
-    velocity = new PVector(0 , 0);
-    acceleration = new PVector(0 , 0);
-    lifespan = 255.0; 
+    velocity = new PVector(0 , 0) ;
+    acceleration = new PVector(0 , 0) ;
+    lifespan = 255.0 ;
+    mass = 2.0 ;
   }
     
-  void run( PVector force )
+  void run()
   {
-    applyForce( force ) ;
     update();
-    checkEdge() ;
+    //checkEdge() ;
     display();
   }
   
   void applyForce( PVector force )
   {
-    acceleration.add( force );
+    PVector f = force.get() ;
+    f.div( mass ) ;
+    acceleration.add( f );
   }
   
   
   boolean isDead()
   {
-    if(lifespan <= 0.0)
-    {
+    if(lifespan <= 0.0) {
       return true;
     }
-    else
-    {
+    else {
       return false;
     }
   }
@@ -60,7 +62,8 @@ class Particle
 
     lifespan -= 2.0;
   }
-  
+
+  /*
   void checkEdge() {
     if( location.x <= 0 || location.x >= width ) {
       velocity.x = (-1) * velocity.x ;
@@ -69,7 +72,8 @@ class Particle
       velocity.y = (-1) * velocity.y ;
     }
   }
-   
+  */
+  
   void display()
   {
     stroke(0 , lifespan);
