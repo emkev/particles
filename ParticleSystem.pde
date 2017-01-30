@@ -1,5 +1,7 @@
 
-/*  2017.01.24 pm 12:23  */
+/*  2017.01.24 pm 12:23  
+    2017.01.26 pm       , add repel-force
+*/
 
 class ParticleSystem {
 
@@ -20,13 +22,32 @@ class ParticleSystem {
                  );
   }
   
-  void run( PVector force ) {
+  /* It is necessary for an independent apply-force function 
+     in the system of particles .
+   */
+  void applyForce( PVector force ) {
+    for( Particle p : particles ) {
+      p.applyForce( force ) ;
+    }
+  }
+  
+  /* It is necessary for an independent apply-repel function 
+     in the system of particles .
+   */
+  void applyRepel( Repeller rp ) {
+    for( Particle p : particles ) {
+      PVector rpForce = rp.repel( p ) ; 
+      p.applyForce( rpForce ) ;
+    }
+  }
+  
+  void run() {
     
     Iterator<Particle> it = particles.iterator() ;
     
     while( it.hasNext() ) {
       Particle p = it.next() ;      
-      p.run( force ) ;
+      p.run() ;      
       if( p.isDead() ) {
         it.remove() ;
       }
