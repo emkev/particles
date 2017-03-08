@@ -1,5 +1,7 @@
 
-/* 20150521 am 11:43
+/* base on Daniel Shiffman's code .
+
+   20150521 am 11:43
    2017.01.17 am 09:58 , modify
    2017.01.24 pm       , modify
    2017.01.25 pm 21:39 , add gravity
@@ -10,7 +12,7 @@ import java.util.Iterator;
 
 PVector wind ;
 PVector gravity ;
-PVector coForce ;
+//PVector coForce ;
 ArrayList<ParticleSystem> psSys ;
 Repeller repeller ;
 
@@ -22,7 +24,7 @@ void setup()
   
   wind = new PVector(0.04 , 0.02);
   gravity = new PVector(0 , 0.05);
-  coForce = PVector.add( wind , gravity );
+  //coForce = PVector.add( wind , gravity );
   
   repeller = new Repeller( width/2 , height/2 ) ;
   
@@ -35,7 +37,8 @@ void draw()
   repeller.display() ;
   
   for( ParticleSystem ps : psSys ) {
-    ps.applyForce( coForce ) ;
+    ps.applyForce( wind ) ;
+    ps.applyForce( gravity ) ;
     ps.applyRepel( repeller ) ;
     ps.run() ;
     ps.addParticle() ;
